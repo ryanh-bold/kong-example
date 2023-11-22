@@ -1,0 +1,30 @@
+version: "3"
+services:
+  kong:
+    build: .
+    environment:
+      KONG_ADMIN_ACCESS_LOG: "/dev/stdout"
+      KONG_ADMIN_ERROR_LOG: "/dev/stderr"
+      KONG_ADMIN_GUI_URL: "http://localhost:8002"
+      KONG_ADMIN_LISTEN: "0.0.0.0:8001, 0.0.0.0:8444 ssl"
+      KONG_DATABASE: "off"
+      KONG_DECLARATIVE_CONFIG: "/etc/kong/kong.yml"
+      KONG_LOG_LEVEL: "debug"
+      KONG_PLUGINS: "bundled,example-plugin"
+      KONG_PLUGINSERVER_EXAMPLE_PLUGIN_QUERY_CMD: "/usr/local/bin/example-plugin -dump"
+      KONG_PLUGINSERVER_NAMES: "example-plugin"
+      KONG_PROXY_ACCESS_LOG: "/dev/stdout"
+      KONG_PROXY_ERROR_LOG: "/dev/stderr"
+    ports:
+      - "8000:8000/tcp"
+      - "8001:8001/tcp"
+      - "8002:8002/tcp"
+      - "8003:8003/tcp"
+      - "8004:8004/tcp"
+      - "8443:8443/tcp"
+      - "8444:8444/tcp"
+      - "8445:8445/tcp"
+      - "8446:8446/tcp"
+      - "8447:8447/tcp"
+    volumes:
+      - "./kong.yml:/etc/kong/kong.yml"

@@ -1,0 +1,41 @@
+_format_version: "3.0"
+plugins:
+- name: example-plugin
+  enabled: true
+  config: {}
+  protocols:
+  - http
+  - https
+services:
+- name: example-service
+  protocol: http
+  host: example.com
+  port: 80
+  path: /
+  retries: 5
+  connect_timeout: 60000
+  read_timeout: 60000
+  write_timeout: 60000
+  routes:
+  - name: example-route
+    preserve_host: false
+    https_redirect_status_code: 426
+    path_handling: v0
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+    paths:
+    - /hello
+    protocols:
+    - http
+    - https
+  plugins:
+  - name: request-termination
+    enabled: true
+    config:
+      message: "kong is alive"
+      status_code: 200
+    protocols:
+    - http
+    - https
